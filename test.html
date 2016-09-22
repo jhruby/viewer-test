@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en" manifest="manifest.appcache">
+<head>
+   <meta charset="utf-8" />
+   <title>Public API Demo</title>
+   <meta name="viewport" content="minimal-ui,width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+   <link href="bootstrap/css/font-awesome.css" rel="stylesheet" />
+   <link href="vitrium-viewer.css" rel="stylesheet" />
+   <script type="text/javascript" src="vitrium-icons.js"></script>
+
+   <script type="text/javascript" src="vitrium-viewer.js"></script>
+
+   <meta name="cached-resources" content="zip-web-worker.js,g4s-aes-key-worker.js,aes-string-worker.js,ajax-loader.gif,bootstrap/css/fontawesome-webfont.woff" />
+
+   <style type="text/css">
+      .half-screen {
+         float: left;
+         width: 50%;
+      }
+
+      #log {
+         color: whitesmoke;
+         overflow-y: auto;
+         height: 100%;
+         position: fixed;
+         right: 0;
+      }
+
+
+      body {
+         background-color: rgba(6, 19, 69, 0.79);
+      }
+
+      .message.error {
+         color: lightsalmon;
+      }
+   </style>
+</head>
+
+
+<body>
+   <script type="text/javascript">
+    $(function ()
+    {
+       vitrium.log.setLevel(0);
+       var $log = $("#log");
+       vitrium.log.setLogger(function (level, message, strlevel) {
+          var $message = $("<div class='message'>")
+             .addClass(strlevel)
+             .append("<span class='level'>[" + strlevel + "] </span>")
+             .append($("<span>").text(message));
+          $log.append($message);
+
+          $log.scrollTop($message.offset().top + $message.height());
+       });
+      var viewer = window.viewer = new WebViewer("viewer", {
+         documentUrl: "encrypted_package.g4s", copyEnabled: true, cacheEnabled: true
+      ,encryptionKey: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+      });
+
+      viewer.on("documentPasswordRequested", function (callback, attempt) {
+         callback("c79635d2-dabd-494d-8515-a60c3906ca09");
+         /*
+         $(".fullscreen").addClass("visible");
+         $("#password").val("");
+         $("#attempt").text(attempt + 1);
+         $("#enter").on("click", function onClicked() {
+            var val = $("#password").val();
+            if (!_.isEmpty(val))
+            {
+               $("#enter").off("click", onClicked);
+               callback(val);
+
+               $(".fullscreen").removeClass("visible");
+            }
+         });*/
+      });
+
+
+      //viewer.ui.annotationsEnabled = false;
+      //viewer.ui.annotationsSync.load();
+      //viewer.ui.serviceCaller.send();
+
+    });
+
+
+   </script>
+   <div id="viewer" class="half-screen"></div>
+   <div class="half-screen" id="log"></div>
+</body>
+</html>

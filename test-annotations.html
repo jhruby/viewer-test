@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en" manifest="manifest.appcache">
+  <head>
+    <meta charset="utf-8" />
+    <title>Public API Demo</title>
+    <meta name="viewport" content="minimal-ui,width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="bootstrap/css/font-awesome.css" rel="stylesheet" />
+	<link href="vitrium-viewer.css" rel="stylesheet" />
+	<script type="text/javascript" src="vitrium-icons.js"></script>
+	<script type="text/javascript" src="vitrium-viewer.js"></script>
+
+      <meta name="cached-resources" content="zip-web-worker.js,g4s-aes-key-worker.js,ajax-loader.gif,bootstrap/css/fontawesome-webfont.woff" />
+	
+	<script type="text/javascript">
+	$(function()
+	{
+	    var viewer = new WebViewer("viewer-demo", {
+	        documentUrl: "document1.bin",
+	        communicationUrl: "/WebViewerService.ashx",
+	        annotationsEnabled: true
+	    });
+	    
+	    viewer.on("documentPasswordRequested", function (returnPasswordCallback)
+	    {
+	      returnPasswordCallback("1234");
+	    });
+	});
+</script>
+</head>
+<body>
+</body>
+</html>
